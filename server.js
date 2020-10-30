@@ -27,10 +27,18 @@ app.get('/userLinks', (req, res) => {
         })
 })
 
+app.get('/:shortID/visitors', (req, res) => {
+    const shortID = req.params.shortID
+    db.findVisitors(shortID)
+        .then((visitors) => {
+            res.status(200).json(visitors)
+        })
+})
+
 app.get('/:shortID', (req, res) => { //End point to redirect visitor to full URL
     let clientIp = requestIp.getClientIp(req) // Gets ip of visitor
     if (clientIp.includes("::ffff:")) {
-        clientIp = clientIp.substring(7, clientIp.length-1) //rids of the ::ffff:
+        clientIp = clientIp.substring(7, clientIp.length) //rids of the ::ffff:
     }
     const shortID = req.params.shortID
     db.findShortUrl(shortID)

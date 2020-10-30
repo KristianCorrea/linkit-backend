@@ -3,7 +3,8 @@ const DB = require('./db/dbconfig')
 module.exports = {
     createShortUrl,
     findShortUrl,
-    findUserUrls
+    findUserUrls,
+    findVisitors
 }
 
 function createShortUrl(shortUrl){
@@ -15,6 +16,11 @@ function createShortUrl(shortUrl){
 function findUserUrls(ipAddress){
     return DB('shortUrl')
         .where({ createdBy: ipAddress })
+}
+
+function findVisitors(shortID){
+    return DB('visitors')
+        .where({ shortID: shortID })
 }
 
 function findShortUrl(shortID){
